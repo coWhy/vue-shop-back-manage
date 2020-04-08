@@ -94,9 +94,9 @@
   ```
 #### 11 登录 登录成功-进入 home组件
    
-  > js编程式导航 this.$router.push({ name: 'home' })
-  > App.vue router-view
-  > 新建home组件 配置路由
+  > js编程式导航 this.$router.push({ name: 'home' })<br>
+  > App.vue router-view<br>
+  > 新建home组件 配置路由<br>
 
 #### 12 登录 简化登录请求代码 async awit 看起来像同步代码
   ```js
@@ -112,27 +112,27 @@
     }  
   ```  
   #### 13 登录 保存token值
-   > 目的：如果用户没登录 -> url直接到home组件->
-   > 在登录成功时 保存正确用户的token值
+   > 目的：如果用户没登录 -> url直接到home组件-><br>
+   > 在登录成功时 保存正确用户的token值<br>
   ```js
     localStorage.setItem('access-token', data.token)
   ```  
 #### 14 首页 布局容器 使用  样式调整
 > 引入布局容器
 #### 15 首页  头部  样式调整
-> layout 布局
-> el-row 行
-> el-col 列
-> 注意: 24栏
+> layout 布局<br>
+> el-row 行<br>
+> el-col 列<br>
+> 注意: 24栏<br>
 #### 16 首页 侧边栏 导航组件
-> el-menu
-> router 开启路由模式 true index==path值
-> unique-opened 是否只保持一个子菜单的展开
+> el-menu<br>
+> router 开启路由模式 true index==path值<br>
+> unique-opened 是否只保持一个子菜单的展开<br>
 #### 17 首页 侧边栏 引入导航组件 调整
-> 调整el-menu 
-> index 不能一样
+> 调整el-menu <br>
+> index 不能一样<br>
 #### 18 进入首页的权限认证
-> 如果登陆过 就不能进入到home组件
+> 如果登陆过 就不能进入到home组件<br>
 ```js
  beforeCreate () {
     // 获取token
@@ -155,10 +155,10 @@
     }
 ```
 #### 20 用户管理 用户列表 新建组件 路由配置
-  > home.vue 开启了路由模式 index值 --> path值
-  > home.vue main-> router-view
-  > 新建users.vue
-  > router/index.js 配置
+  > home.vue 开启了路由模式 index值 --> path值<br>
+  > home.vue main-> router-view<br>
+  > 新建users.vue<br>
+  > router/index.js 配置<br>
   ```js
    {
       path: '/home',
@@ -173,10 +173,10 @@
       ]
   ```
   #### 21 用户管理 用户列表 面包屑和搜框
-  > el-card 小容器
-  > 面包屑
-  > el-row>el-col>input+el-button
-  > 调整样式
+  > el-card 小容器<br>
+  > 面包屑<br>
+  > el-row>el-col>input+el-button<br>
+  > 调整样式<br>
   #### 22 用户管理 用户列表 引入表格组件
   > el-table[data--数据源] > el-table-column[label--表头/prop=“数据"] > 字符串类型数据
   ```html
@@ -197,11 +197,11 @@
     </el-table>
   ```
   #### 23 用户管理 用户列表表头处理
-  > 按照效果 调整了表头的数量和label
-  > type="index" 该列的每个单元格的内容从1开始
+  > 按照效果 调整了表头的数量和label<br>
+  > type="index" 该列的每个单元格的内容从1开始<br>
   #### 24 用户管理 用户列表 请求数据 设置请求头
-  > 通过axios中关于请求头的设置
-  > 除了登录之外的所有请求都需要进行授权->设置请求头 Authorization
+  > 通过axios中关于请求头的设置<br>
+  > 除了登录之外的所有请求都需要进行授权->设置请求头 Authorization<br>
   ```js
   axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
   ```
@@ -224,7 +224,7 @@
   }
   ```
   #### 25 用户管理 用户列表 渲染列表
-  > 解析赋值
+  > 解析赋值<br>
   ```js
    const { data: { users, total }, meta: { msg, status } } = res.data
       if (status === 200) {
@@ -235,7 +235,7 @@
       }
   ```
   #### 26 用户管理 用户列表 日期格式处理
-  > 不同组件的数据不是共享的 而是独立作用域
+  > 不同组件的数据不是共享的 而是独立作用域<br>
   ```html
     <!--  template
           内部要用数据 设置slot=scope属性
@@ -245,13 +245,13 @@
           userList.row->数组中的每个对象
     -->
   ``` 
-  > Users.vue中
+  > Users.vue中<br>
   ```html
      <template slot-scope="scope">
           {{scope.row.create_time|fmtdate}}
      </template>
   ```
-  > 引入moment 在main.js设置全局过滤器 进行日期控制
+  > 引入moment 在main.js设置全局过滤器 进行日期控制<br>
   ```js
     import moment from 'moment'
     Vue.filter('fmtdate', v => {
@@ -273,17 +273,17 @@
       </el-table-column>
   ```
   #### 28 用户管理 用户列表 渲染数据 操作
-  > 操作里面不是字符
-  > template容器 
-  > el-button[size="mini"&plain]
+  > 操作里面不是字符<br>
+  > template容器 <br>
+  > el-button[size="mini"&plain]<br>
   #### 28 用户管理 用户列表 分页组件 
-  > 该接口支持分页
-  > @size-change 每页显示条数 变化时 触发
-  > @current-change 当前页改变时 触发
-  > :current-page 设置当前页
-  > :page-sizes [10,20,30,40] 每页多少条的数组
-  > :page-size 设置每页显示多少条
-  > :total 数据总数
+  > 该接口支持分页<br>
+  > @size-change 每页显示条数 变化时 触发<br>
+  > @current-change 当前页改变时 触发<br>
+  > :current-page 设置当前页<br>
+  > :page-sizes [10,20,30,40] 每页多少条的数组<br>
+  > :page-size 设置每页显示多少条<br>
+  > :total 数据总数<br>
   #### 29 用户管理 用户列表 分页组件 配置数据
   ```html
    <!-- 分页 -->
@@ -292,18 +292,19 @@
                    :current-page="pagenum"
                    :page-sizes="[2, 4, 6, 8]"
                    :page-size="pagesize"
-                   layout="total, sizes, prev, pager, next, jumper"
+                   layout="total, sizes, pre
+                   v, pager, next, jumper"
                    :total="total">
     </el-pagination>
   ``` 
-  > 每页显示条数改变 -> this.pagesize= val -> this.getUserList()
-  > 页码改变时 -> this,pagenum = val -> this.getUserList()
-  >  每页显示条数改变: 从第一页开始显示 this.pagenum = 1 -> currentpage = 1
+  > 每页显示条数改变 -> this.pagesize= val -> this.getUserList()<br>
+  > 页码改变时 -> this,pagenum = val -> this.getUserList()<br>
+  >  每页显示条数改变: 从第一页开始显示 this.pagenum = 1 -> currentpage = 1<br>
 #### 30 用户管理 用户列表 分页组件 搜索用户
-> 给搜索框绑定query v-model="query"
-> 点击搜索按钮 发送请求
-> 一键清除 clearable
-> 点击清除按钮 重新获取数据 @clear=""
+> 给搜索框绑定query v-model="query"<br>
+> 点击搜索按钮 发送请求<br>
+> 一键清除 clearable<br>
+> 点击清除按钮 重新获取数据 @clear=""<br>
 ```html
     <!-- 搜索 -->
     <el-row class="searchRow">
@@ -323,3 +324,17 @@
       </el-col>
     </el-row>
 ```
+#### 30 用户管理 用户列表 添加 用户 显示对话框
+> 引入对话框 el-form<br>
+> 点击添加用户的按钮 显示对话框 dialogFormVisibleAdd = false -> true<br>
+> 配置对话框 <br>
+> :model-form 添加用户所需要的数据<br>
+```js
+ form: {
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
+      }// 添加用户对象
+```
+> el-form>el-input v-model="form.xxx"<br>

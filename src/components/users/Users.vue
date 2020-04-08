@@ -20,6 +20,7 @@
           </el-button>
         </el-input>
         <el-button type="success"
+                   @click="dialogFormVisibleAdd=true"
                    plain>添加用户</el-button>
       </el-col>
     </el-row>
@@ -87,6 +88,41 @@
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="total">
     </el-pagination>
+
+    <!-- 对话框 -->
+    <!-- 添加用户对话框 -->
+    <el-dialog title="添加用户"
+               :visible.sync="dialogFormVisibleAdd">
+      <el-form :model="form">
+        <el-form-item label="用户名"
+                      v-model="form.username"
+                      :label-width="formLabelWidth">
+          <el-input autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码"
+                      v-model="form.password"
+                      :label-width="formLabelWidth">
+          <el-input autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱"
+                      v-model="form.email"
+                      :label-width="formLabelWidth">
+          <el-input autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="电话"
+                      v-model="form.mobile"
+                      :label-width="formLabelWidth">
+          <el-input autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer"
+           class="dialog-footer">
+        <el-button @click="dialogFormVisibleAdd = false">取 消</el-button>
+        <el-button type="primary"
+                   @click="dialogFormVisibleAdd = false">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </el-card>
 </template>
 <script>
@@ -99,8 +135,15 @@ export default {
       // 分页相关数据
       pagenum: 1,
       pagesize: 2,
-      total: -1
-
+      total: -1,
+      dialogFormVisibleAdd: false, // 添加对话框的属性
+      formLabelWidth: '100px',
+      form: {
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
+      }// 添加用户对象
     }
   },
   methods: {
