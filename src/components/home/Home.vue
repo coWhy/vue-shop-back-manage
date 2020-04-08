@@ -15,8 +15,8 @@
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">
-            <a href=""
-               class="loginout">退出</a>
+            <a class="loginout"
+               @click.prevent="handleSignout()">退出</a>
           </div>
         </el-col>
       </el-row>
@@ -129,6 +129,13 @@ export default {
     }
   },
   methods: {
+    handleSignout () {
+      // 清除token
+      localStorage.clear()
+      // localStorage.removeItem('access-token')
+      this.$message.success('退出成功')
+      this.$router.push({ name: 'login' })
+    }
   },
   beforeCreate () {
     // 获取token
