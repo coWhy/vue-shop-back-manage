@@ -44,7 +44,7 @@ export default {
         console.log(JSON.stringify(data))
         // 保存toekn 用于登录验证使用 先判断是否存在token
         var accessToken = localStorage.getItem('access-token')
-        if (accessToken === '') {
+        if (!accessToken) {
           localStorage.setItem('access-token', data.token)
         }
 

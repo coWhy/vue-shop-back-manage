@@ -131,3 +131,16 @@
 #### 17 首页 侧边栏 引入导航组件 调整
 > 调整el-menu 
 > index 不能一样
+#### 18 进入首页的权限认证
+> 如果登陆过 就不能进入到home组件
+```js
+ beforeCreate () {
+    // 获取token
+    // if token --> yes-->继续渲染组件 不能写在mounted 要写在组件出现之前
+    // else --> 返回登录页面
+    const accessToken = localStorage.getItem('access-token')
+    if (!accessToken) {
+      this.$router.push({ name: 'login' })
+    }
+  }
+```

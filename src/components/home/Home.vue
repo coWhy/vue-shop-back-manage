@@ -24,9 +24,7 @@
     <el-container>
       <el-aside width="200px"
                 class="aside">
-        <el-menu @open="handleOpen"
-                 @close="handleClose"
-                 :unique-opened="true">
+        <el-menu :unique-opened="true">
           <!-- 用户部分 -->
           <el-submenu index="1">
             <template slot="title">
@@ -131,11 +129,14 @@ export default {
     }
   },
   methods: {
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
+  },
+  beforeCreate () {
+    // 获取token
+    // if token --> yes-->继续渲染组件 不能写在mounted 要写在组件出现之前
+    // else --> 返回登录页面
+    const accessToken = localStorage.getItem('access-token')
+    if (!accessToken) {
+      this.$router.push({ name: 'login' })
     }
   }
 }
@@ -157,8 +158,8 @@ export default {
 /* 头部样式 */
 .logo {
   text-align: center;
-  width: 35%;
-  height: 35%;
+  width: 30%;
+  height: 30%;
 }
 .middle {
   /* line-height: 60px; */
