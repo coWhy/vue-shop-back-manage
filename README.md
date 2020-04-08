@@ -269,6 +269,10 @@
                      inactive-color="#ff4949">
           </el-switch>
         </template>
-        
+
       </el-table-column>
   ```
+  #### 28 用户管理 用户列表 渲染数据 操作
+  > 操作里面不是字符
+  > template容器 
+  > el-button[size="mini"&plain]

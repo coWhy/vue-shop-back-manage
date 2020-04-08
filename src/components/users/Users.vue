@@ -15,7 +15,8 @@
           <el-button slot="append"
                      icon="el-icon-search"></el-button>
         </el-input>
-        <el-button type="success">添加用户</el-button>
+        <el-button type="success"
+                   plain>添加用户</el-button>
       </el-col>
     </el-row>
     <!-- 表格 -->
@@ -49,7 +50,26 @@
         </template>
       </el-table-column>
       <el-table-column label="操作">
-
+        <template>
+          <el-button type="primary"
+                     icon="el-icon-edit"
+                     size="mini"
+                     plain
+                     circle>
+          </el-button>
+          <el-button type="danger"
+                     icon="el-icon-delete"
+                     size="mini"
+                     plain
+                     circle>
+          </el-button>
+          <el-button type="success"
+                     icon="el-icon-check"
+                     size="mini"
+                     plain
+                     circle>
+          </el-button>
+        </template>
       </el-table-column>
     </el-table>
     <!-- 分页 -->
