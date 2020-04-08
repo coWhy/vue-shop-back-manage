@@ -19,26 +19,35 @@
       </el-col>
     </el-row>
     <!-- 表格 -->
-    <el-table :data="tableData"
+    <el-table :data="userList"
               style="width: 100%">
       <el-table-column label="#"
                        width="60"
                        type="index">
       </el-table-column>
-      <el-table-column prop="name"
+      <el-table-column prop="username"
                        label="姓名"
                        width="80">
       </el-table-column>
-      <el-table-column prop="address"
+      <el-table-column prop="email"
                        label="邮箱">
       </el-table-column>
-      <el-table-column prop="address"
+      <el-table-column prop="mobile"
                        label="电话">
       </el-table-column>
-      <el-table-column prop="address"
-                       label="创建时间">
+      <el-table-column label="创建时间">
+        <!-- template
+          内部要用数据 设置slot=scope属性
+          该属性的值是要用数据create_time的数据源userList
+
+          slot-scope的值userList其实就是el-table绑定的数据userList
+          userList.row->数组中的每个对象
+         -->
+        <template slot-scope="userList">
+          {{userList.row.create_time|fmtdate}}
+        </template>
       </el-table-column>
-      <el-table-column prop="address"
+      <el-table-column prop="mg_state"
                        label="用户状态">
       </el-table-column>
       <el-table-column prop="address"
@@ -53,22 +62,24 @@ export default {
   data () {
     return {
       query: '', // 查询条件
+      // 绑定的数据
+      userList: [],
+      // 分页相关数据
       pagenum: 1,
       pagesize: 10,
-      // 绑定的数据
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }]
+      total: -1
 
     }
   },
   methods: {
+    // id: 502
+    // role_name: "测试角色2"
+    // username: "linken"
+    // create_time: 1486720211
+    // mobile: "1213213123"
+    // email: "asdf@qq.com"
+    // mg_state: false
+
     // query 查询参数 可以为空
     // pagenum 当前页 不能为空
     // pagesiz 每页显示条 不能为空
@@ -79,6 +90,13 @@ export default {
       this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
       const res = await this.$http.get(`users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${this.pagesize}`)
       console.log(res)
+      const { data: { users, total }, meta: { msg, status } } = res.data
+      if (status === 200) {
+        this.userList = users
+        this.total = total
+      } else {
+        this.$message.error(msg)
+      }
     }
   },
   created () { // 页面加载前

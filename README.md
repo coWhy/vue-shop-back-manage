@@ -201,6 +201,7 @@
   > type="index" 该列的每个单元格的内容从1开始
   #### 24 用户管理 用户列表 请求数据 设置请求头
   > 通过axios中关于请求头的设置
+  > 除了登录之外的所有请求都需要进行授权->设置请求头 Authorization
   ```js
   axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
   ```
@@ -222,3 +223,24 @@
     this.getUserList()
   }
   ```
+  #### 25 用户管理 用户列表 渲染列表
+  > 解析赋值
+  ```js
+   const { data: { users, total }, meta: { msg, status } } = res.data
+      if (status === 200) {
+        this.userList = users
+        this.total = total
+      } else {
+        this.$message.error(msg)
+      }
+  ```
+  #### 26 用户管理 用户列表 日期格式处理
+  ```js
+    <!--  template
+          内部要用数据 设置slot=scope属性
+          该属性的值是要用数据create_time的数据源userList
+
+          slot-scope的值userList其实就是el-table绑定的数据userList
+          userList.row->数组中的每个对象
+    -->
+  ````  
