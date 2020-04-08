@@ -172,3 +172,53 @@
         }
       ]
   ```
+  #### 21 用户管理 用户列表 面包屑和搜框
+  > el-card 小容器
+  > 面包屑
+  > el-row>el-col>input+el-button
+  > 调整样式
+  #### 22 用户管理 用户列表 引入表格组件
+  > el-table[data--数据源] > el-table-column[label--表头/prop=“数据"] > 字符串类型数据
+  ```js
+   <!-- 表格 -->
+    <el-table :data="tableData"
+              style="width: 100%">
+      <el-table-column prop="date"
+                       label="日期"
+                       width="180">
+      </el-table-column>
+      <el-table-column prop="name"
+                       label="姓名"
+                       width="180">
+      </el-table-column>
+      <el-table-column prop="address"
+                       label="地址">
+      </el-table-column>
+    </el-table>
+  ```
+  #### 23 用户管理 用户列表表头处理
+  > 按照效果 调整了表头的数量和label
+  > type="index" 该列的每个单元格的内容从1开始
+  #### 24 用户管理 用户列表 请求数据 设置请求头
+  > 通过axios中关于请求头的设置
+  ```js
+  axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+  ```
+  ```js
+    methods: {
+    // query 查询参数 可以为空
+    // pagenum 当前页 不能为空
+    // pagesiz 每页显示条 不能为空
+    // 获取用户列表
+    async getUserList () {
+      // 需要授权的 API ，必须在请求头中使用 Authorization 字段提供 token 令牌
+      const AUTH_TOKEN = localStorage.getItem('access-token')
+      this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
+      const res = await this.$http.get(`users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${this.pagesize}`)
+      console.log(res)
+    }
+  },
+  created () { // 页面加载前
+    this.getUserList()
+  }
+  ```
