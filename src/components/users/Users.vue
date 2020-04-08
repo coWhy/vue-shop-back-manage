@@ -20,7 +20,7 @@
           </el-button>
         </el-input>
         <el-button type="success"
-                   @click="dialogFormVisibleAdd=true"
+                   @click="showAddUserDialog()"
                    plain>添加用户</el-button>
       </el-col>
     </el-row>
@@ -61,6 +61,7 @@
                      icon="el-icon-edit"
                      size="mini"
                      plain
+                     @click="showEditUserDialog(scope.row)"
                      circle>
           </el-button>
           <el-button @click="showDelUserMsgBox(scope.row.id)"
@@ -124,6 +125,35 @@
       </div>
     </el-dialog>
 
+    <!-- 编辑用户对话框 -->
+    <el-dialog title="编辑用户"
+               :visible.sync="dialogFormVisibleEdit">
+      <el-form :model="form">
+        <el-form-item label="用户名"
+                      :label-width="formLabelWidth">
+          <el-input v-model="form.username"
+                    :disabled="true"
+                    autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱"
+                      :label-width="formLabelWidth">
+          <el-input v-model="form.email"
+                    autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="电话"
+                      :label-width="formLabelWidth">
+          <el-input v-model="form.mobile"
+                    autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer"
+           class="dialog-footer">
+        <el-button @click="dialogFormVisibleEdit = false">取 消</el-button>
+        <el-button type="primary"
+                   @click="editUser()">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </el-card>
 </template>
 <script>
@@ -138,16 +168,35 @@ export default {
       pagesize: 4,
       total: -1,
       dialogFormVisibleAdd: false, // 添加对话框的属性
+      dialogFormVisibleEdit: false, // 编辑对话框的属性
       formLabelWidth: '100px',
       form: {
         username: '',
         password: '',
         email: '',
         mobile: ''
-      }// 添加用户对象
+      } // 添加用户对象
+      // curUserId: -1
     }
   },
   methods: {
+    // 编辑用户
+    async editUser () {
+      const res = await this.$http.put(`users/${this.form.id}`, this.form)
+      const { meta: { msg, status } } = res.data
+      if (status === 200) {
+        this.dialogFormVisibleEdit = false
+        this.$message.success('更新成功')
+        this.getUserList()
+      } else {
+        this.$message.warning(msg)
+      }
+    },
+    // 打开编辑窗口
+    showEditUserDialog (user) {
+      this.form = user // 提取这用户的数据 渲染到表单
+      this.dialogFormVisibleEdit = true
+    },
     // 打开删除信息框
     showDelUserMsgBox (id) {
       this.$confirm('确定要删除此用户吗?', '提示', {
@@ -170,6 +219,11 @@ export default {
       }).catch(() => {
         this.$message.info('已取消删除')
       })
+    },
+    showAddUserDialog () {
+      // 清除表格之前的缓存
+      this.form = {}
+      this.dialogFormVisibleAdd = true
     },
     // 添加用户
     async addUser () {

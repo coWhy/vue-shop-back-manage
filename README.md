@@ -389,3 +389,39 @@
           this.$message.warning(msg)
         }
 ```
+#### 32 用户管理 用户列表 编辑 用户 显示对话框
+> 点击操作中的编辑按钮 打开编辑对话框<br>
+> 提示对话框显示/隐藏的控制属性 dialogFormVisibleEdit <br>
+> 找到编辑按钮 绑定@click -> 打开对话框  @click="dialogFormVisibleEdit=true"<br>
+> form用的是之前添加时候用的<br>
+#### 33 用户管理 用户列表 编辑 用户 显示编辑数据
+> 点击编辑按钮  scope.row  @click="showEditUserDialog(scope.row)"<br>
+> showEditUserDialog(user) 方法中 this.form = user 其中 user = scope.row<br>
+#### 34 用户管理 用户列表 编辑 用户 发送请求
+> 找到对话框的确定按钮 -> editUser() -> 发送请求 <br>
+> this.form = user <br>
+> id = this.form.id <br>
+> 关闭对话框<br>
+> 更新视图<br>
+```js
+ async editUser () {
+      const res = await this.$http.put(`users/${this.form.id}`, this.form)
+      const { meta: { msg, status } } = res.data
+      if (status === 200) {
+        this.dialogFormVisibleEdit = false
+        this.$message.success('更新成功')
+        this.getUserList()
+      } else {
+        this.$message.warning(msg)
+      }
+    },
+```
+> 先点编辑 再点添加 会残留缓存数据 <br>
+> 打开添加对话框之前 清除残留数据 <br>
+```js
+  showAddUserDialog () {
+      // 清除表格之前的缓存
+      this.form = {}
+      this.dialogFormVisibleAdd = true
+    },
+```
