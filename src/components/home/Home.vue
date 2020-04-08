@@ -23,7 +23,101 @@
     </el-header>
     <el-container>
       <el-aside width="200px"
-                class="aside">Aside</el-aside>
+                class="aside">
+        <el-menu @open="handleOpen"
+                 @close="handleClose"
+                 :unique-opened="true">
+          <!-- 用户部分 -->
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-user-solid"></i>
+              <span>用户管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="1-1">
+                <li class="el-icon-user"></li>
+                <span> 用户列表</span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- 权限部分 -->
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span>权限管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="1-1">
+                <li class="el-icon-document-copy"></li>
+                <span> 权限列表</span>
+              </el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="1-1">
+                <li class="el-icon-s-check"></li>
+                <span> 角色列表</span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- 商品部分 -->
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-s-goods"></i>
+              <span>商品管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="1-1">
+                <li class="el-icon-goods"></li>
+                <span>商品列表</span>
+              </el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="1-1">
+                <li class="el-icon-setting"></li>
+                <span>分类参数</span>
+              </el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="1-1">
+                <li class="el-icon-warning-outline"></li>
+                <span>商品分类</span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- 订单部分 -->
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-shopping-cart-full"></i>
+              <span>订单管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="1-1">
+                <li class="el-icon-document-copy"></li>
+                <span>订单列表</span>
+              </el-menu-item>
+            </el-menu-item-group>
+
+          </el-submenu>
+
+          <!-- 数据统计 -->
+          <el-submenu index="5">
+            <template slot="title">
+              <i class="el-icon-monitor"></i>
+              <span>数据统计</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="1-1">
+                <li class="el-icon-document-checked"></li>
+                <span>数据报表</span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+        </el-menu>
+      </el-aside>
       <el-main class="main">Main
       </el-main>
     </el-container>
@@ -34,6 +128,14 @@ export default {
   data () {
     return {
       logo: require('@/assets/logo.png')
+    }
+  },
+  methods: {
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose (key, keyPath) {
+      console.log(key, keyPath)
     }
   }
 }

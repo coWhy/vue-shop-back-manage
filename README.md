@@ -124,3 +124,10 @@
 > el-row 行
 > el-col 列
 > 注意: 24栏
+#### 16 首页 侧边栏 导航组件
+> el-menu
+> router 开启路由模式 true index==path值
+> unique-opened 是否只保持一个子菜单的展开
+#### 17 首页 侧边栏 引入导航组件 调整
+> 调整el-menu 
+> index 不能一样
