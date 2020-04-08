@@ -83,7 +83,7 @@
     <el-pagination @size-change="handleSizeChange"
                    @current-change="handleCurrentChange"
                    :current-page="pagenum"
-                   :page-sizes="[2, 4, 6, 8]"
+                   :page-sizes="[4, 8, 16, 32]"
                    :page-size="pagesize"
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="total">
@@ -95,31 +95,31 @@
                :visible.sync="dialogFormVisibleAdd">
       <el-form :model="form">
         <el-form-item label="用户名"
-                      v-model="form.username"
                       :label-width="formLabelWidth">
-          <el-input autocomplete="off"></el-input>
+          <el-input v-model="form.username"
+                    autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码"
-                      v-model="form.password"
                       :label-width="formLabelWidth">
-          <el-input autocomplete="off"></el-input>
+          <el-input v-model="form.password"
+                    autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="邮箱"
-                      v-model="form.email"
                       :label-width="formLabelWidth">
-          <el-input autocomplete="off"></el-input>
+          <el-input v-model="form.email"
+                    autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="电话"
-                      v-model="form.mobile"
                       :label-width="formLabelWidth">
-          <el-input autocomplete="off"></el-input>
+          <el-input v-model="form.mobile"
+                    autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer"
            class="dialog-footer">
         <el-button @click="dialogFormVisibleAdd = false">取 消</el-button>
         <el-button type="primary"
-                   @click="dialogFormVisibleAdd = false">确 定</el-button>
+                   @click="addUser()">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -134,7 +134,7 @@ export default {
       userList: [],
       // 分页相关数据
       pagenum: 1,
-      pagesize: 2,
+      pagesize: 4,
       total: -1,
       dialogFormVisibleAdd: false, // 添加对话框的属性
       formLabelWidth: '100px',
@@ -147,6 +147,19 @@ export default {
     }
   },
   methods: {
+    // 添加用户
+    async addUser () {
+      const res = await this.$http.post('users', this.form)
+      const { meta: { msg, status } } = res.data
+      if (status === 201) {
+        this.dialogFormVisibleAdd = false // 关闭对话框
+        this.$message.success('添加成功') // 提示添加成功
+        this.getUserList() // 更新视图
+        this.form = {} // 清空form
+      } else {
+        this.$message.warning(msg)
+      }
+    },
     // 搜索框没数据了之后 重新加载
     loadUserList () {
       this.getUserList()

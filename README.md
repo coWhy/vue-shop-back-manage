@@ -338,3 +338,23 @@
       }// 添加用户对象
 ```
 > el-form>el-input v-model="form.xxx"<br>
+#### 31 用户管理 用户列表 添加 用户 发送请求
+> post  this.form<br>
+> 关闭对话框<br>
+> 清空文本框 this.form = {}<br>
+> 更新视图 <br>
+```js
+ // 添加用户
+    async addUser () {
+      const res = await this.$http.post('users', this.form)
+      const { meta: { msg, status } } = res.data
+      if (status === 201) {
+        this.dialogFormVisibleAdd = false // 关闭对话框
+        this.$message.success('添加成功') // 提示添加成功
+        this.getUserList() // 更新视图
+        this.form = {} // 清空form
+      } else {
+        this.$message.warning(msg)
+      }
+    },
+```
