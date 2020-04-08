@@ -258,3 +258,17 @@
       return moment(v).format('YYYY-MM-DD')
     })
   ```
+  #### 27 用户管理 用户列表 渲染数据 用户状态开关
+  > el-switch v-model="[bool值]"
+  ```js
+     <el-table-column label="用户状态">
+
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.mg_state"
+                     active-color="#13ce66"
+                     inactive-color="#ff4949">
+          </el-switch>
+        </template>
+        
+      </el-table-column>
+  ```

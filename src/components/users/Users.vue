@@ -36,22 +36,20 @@
                        label="电话">
       </el-table-column>
       <el-table-column label="创建时间">
-        <!-- template
-          内部要用数据 设置slot=scope属性
-          该属性的值是要用数据create_time的数据源userList
-
-          slot-scope的值userList其实就是el-table绑定的数据userList
-          userList.row->数组中的每个对象
-         -->
         <template slot-scope="scope">
           {{scope.row.create_time|fmtdate}}
         </template>
       </el-table-column>
-      <el-table-column prop="mg_state"
-                       label="用户状态">
+      <el-table-column label="用户状态">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.mg_state"
+                     active-color="#13ce66"
+                     inactive-color="#ff4949">
+          </el-switch>
+        </template>
       </el-table-column>
-      <el-table-column prop="address"
-                       label="操作">
+      <el-table-column label="操作">
+
       </el-table-column>
     </el-table>
     <!-- 分页 -->
