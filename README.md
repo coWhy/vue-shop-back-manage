@@ -154,3 +154,21 @@
       this.$router.push({ name: 'login' })
     }
 ```
+#### 20 用户管理 用户列表 新建组件 路由配置
+  > home.vue 开启了路由模式 index值 --> path值
+  > home.vue main-> router-view
+  > 新建users.vue
+  > router/index.js 配置
+  ```js
+   {
+      path: '/home',
+      name: 'home',
+      component: () => import('@/components/home/Home.vue'),
+      children: [
+        {
+          path: '/users',
+          name: 'users',
+          component: () => import('@/components/users/Users.vue')
+        }
+      ]
+  ```

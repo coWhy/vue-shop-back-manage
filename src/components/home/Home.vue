@@ -24,7 +24,8 @@
     <el-container>
       <el-aside width="200px"
                 class="aside">
-        <el-menu :unique-opened="true">
+        <el-menu :unique-opened="true"
+                 :router="true">
           <!-- 用户部分 -->
           <el-submenu index="1">
             <template slot="title">
@@ -32,9 +33,9 @@
               <span>用户管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1">
+              <el-menu-item index="/users">
                 <li class="el-icon-user"></li>
-                <span> 用户列表</span>
+                <span>用户列表</span>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -116,7 +117,8 @@
 
         </el-menu>
       </el-aside>
-      <el-main class="main">Main
+      <el-main class="main">
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
