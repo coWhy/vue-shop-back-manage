@@ -235,6 +235,7 @@
       }
   ```
   #### 26 用户管理 用户列表 日期格式处理
+  > 不同组件的数据不是共享的 而是独立作用域
   ```js
     <!--  template
           内部要用数据 设置slot=scope属性
@@ -244,6 +245,7 @@
           userList.row->数组中的每个对象
     -->
   ``` 
+  > Users.vue中
   ```js
      <template slot-scope="scope">
           {{scope.row.create_time|fmtdate}}
