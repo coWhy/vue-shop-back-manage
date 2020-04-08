@@ -377,6 +377,7 @@
 > 点击确定 -> 发送 delete 请求<br>
 > 提示<br>
 > 更新视图 返回第一页<br>
+> 注意 async的位置 then(async () => {})
 ```js
         const res = await this.$http.delete(`users/${id}`)
         const { meta: { msg, status } } = res.data
