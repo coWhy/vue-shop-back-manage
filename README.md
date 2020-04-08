@@ -179,7 +179,7 @@
   > 调整样式
   #### 22 用户管理 用户列表 引入表格组件
   > el-table[data--数据源] > el-table-column[label--表头/prop=“数据"] > 字符串类型数据
-  ```js
+  ```html
    <!-- 表格 -->
     <el-table :data="tableData"
               style="width: 100%">
@@ -236,7 +236,7 @@
   ```
   #### 26 用户管理 用户列表 日期格式处理
   > 不同组件的数据不是共享的 而是独立作用域
-  ```js
+  ```html
     <!--  template
           内部要用数据 设置slot=scope属性
           该属性的值是要用数据create_time的数据源userList
@@ -246,7 +246,7 @@
     -->
   ``` 
   > Users.vue中
-  ```js
+  ```html
      <template slot-scope="scope">
           {{scope.row.create_time|fmtdate}}
      </template>
@@ -260,7 +260,7 @@
   ```
   #### 27 用户管理 用户列表 渲染数据 用户状态开关
   > el-switch v-model="[bool值]"
-  ```js
+  ```html
      <el-table-column label="用户状态">
 
         <template slot-scope="scope">
@@ -276,3 +276,46 @@
   > 操作里面不是字符
   > template容器 
   > el-button[size="mini"&plain]
+  #### 28 用户管理 用户列表 分页组件 
+  > 该接口支持分页
+  > @size-change 每页显示条数 变化时 触发
+  > @current-change 当前页改变时 触发
+  > :current-page 设置当前页
+  > :page-sizes [10,20,30,40] 每页多少条的数组
+  > :page-size 设置每页显示多少条
+  > :total 数据总数
+  #### 29 用户管理 用户列表 分页组件 配置数据
+  ```html
+   <!-- 分页 -->
+    <el-pagination @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="pagenum"
+                   :page-sizes="[2, 4, 6, 8]"
+                   :page-size="pagesize"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="total">
+    </el-pagination>
+  ``` 
+  > 每页显示条数改变 -> this.pagesize= val -> this.getUserList()
+  > 页码改变时 -> this,pagenum = val -> this.getUserList()
+  >  每页显示条数改变: 从第一页开始显示 this.pagenum = 1 -> currentpage = 1
+#### 30 用户管理 用户列表 分页组件 搜索用户
+```html
+    <!-- 搜索 -->
+    <el-row class="searchRow">
+      <el-col>
+        <el-input @clear="loadUserList()"
+                  placeholder="请输入内容"
+                  v-model="query"
+                  class="inputSearch"
+                  clearable>
+          <el-button slot="append"
+                     @click="searchUser()"
+                     icon="el-icon-search">
+          </el-button>
+        </el-input>
+        <el-button type="success"
+                   plain>添加用户</el-button>
+      </el-col>
+    </el-row>
+```

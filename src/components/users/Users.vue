@@ -9,16 +9,21 @@
     <!-- 搜索 -->
     <el-row class="searchRow">
       <el-col>
-        <el-input placeholder="请输入内容"
+        <el-input @clear="loadUserList()"
+                  placeholder="请输入内容"
                   v-model="query"
-                  class="inputSearch">
+                  class="inputSearch"
+                  clearable>
           <el-button slot="append"
-                     icon="el-icon-search"></el-button>
+                     @click="searchUser()"
+                     icon="el-icon-search">
+          </el-button>
         </el-input>
         <el-button type="success"
                    plain>添加用户</el-button>
       </el-col>
     </el-row>
+
     <!-- 表格 -->
     <el-table :data="userList"
               style="width: 100%">
@@ -72,7 +77,16 @@
         </template>
       </el-table-column>
     </el-table>
+
     <!-- 分页 -->
+    <el-pagination @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="pagenum"
+                   :page-sizes="[2, 4, 6, 8]"
+                   :page-size="pagesize"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="total">
+    </el-pagination>
   </el-card>
 </template>
 <script>
@@ -84,12 +98,31 @@ export default {
       userList: [],
       // 分页相关数据
       pagenum: 1,
-      pagesize: 10,
+      pagesize: 2,
       total: -1
 
     }
   },
   methods: {
+    // 搜索框没数据了之后 重新加载
+    loadUserList () {
+      this.getUserList()
+    },
+    // 搜索用户
+    searchUser () {
+      this.getUserList()
+    },
+    // 分页相关方法
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+      this.pagesize = val
+      this.getUserList()
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页 ${val}`)
+      this.pagenum = val
+      this.getUserList()
+    },
     // id: 502
     // role_name: "测试角色2"
     // username: "linken"
@@ -112,6 +145,7 @@ export default {
       if (status === 200) {
         this.userList = users
         this.total = total
+        // this.pagenum = 1
       } else {
         this.$message.error(msg)
       }
