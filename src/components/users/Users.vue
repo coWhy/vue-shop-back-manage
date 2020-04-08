@@ -56,14 +56,15 @@
         </template>
       </el-table-column>
       <el-table-column label="操作">
-        <template>
+        <template slot-scope="scope">
           <el-button type="primary"
                      icon="el-icon-edit"
                      size="mini"
                      plain
                      circle>
           </el-button>
-          <el-button type="danger"
+          <el-button @click="showDelUserMsgBox(scope.row.id)"
+                     type="danger"
                      icon="el-icon-delete"
                      size="mini"
                      plain
@@ -147,6 +148,29 @@ export default {
     }
   },
   methods: {
+    // 打开删除信息框
+    showDelUserMsgBox (id) {
+      this.$confirm('确定要删除此用户吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        // 发送删除的请求 :id 用户id
+        // 1.data中找有没有id x
+        // 2.把用户id以参数方式传来 /
+        const res = await this.$http.delete(`users/${id}`)
+        const { meta: { msg, status } } = res.data
+        if (status === 200) {
+          this.pagenum = 1 // 回到第一页
+          this.$message.success('删除成功')
+          this.getUserList()
+        } else {
+          this.$message.warning(msg)
+        }
+      }).catch(() => {
+        this.$message.info('已取消删除')
+      })
+    },
     // 添加用户
     async addUser () {
       const res = await this.$http.post('users', this.form)

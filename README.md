@@ -358,3 +358,33 @@
       }
     },
 ```
+#### 32 用户管理 用户列表 删除 用户 打开消息框
+> this.$confirm<br>
+> 点击确定 -> then<br>
+> 点击取消 -> catch<br>
+```js
+ this.$confirm('确定要删除此用户吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message.success('删除成功')
+      }).catch(() => {
+        this.$message.info('已取消删除')
+      })
+```
+#### 32 用户管理 用户列表 删除 用户 处理响应
+> 点击确定 -> 发送 delete 请求<br>
+> 提示<br>
+> 更新视图 返回第一页<br>
+```js
+        const res = await this.$http.delete(`users/${id}`)
+        const { meta: { msg, status } } = res.data
+        if (status === 200) {
+          this.pagenum = 1 // 回到第一页
+          this.$message.success('删除成功')
+          this.getUserList()
+        } else {
+          this.$message.warning(msg)
+        }
+```
