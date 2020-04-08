@@ -43,8 +43,8 @@
           slot-scope的值userList其实就是el-table绑定的数据userList
           userList.row->数组中的每个对象
          -->
-        <template slot-scope="userList">
-          {{userList.row.create_time|fmtdate}}
+        <template slot-scope="scope">
+          {{scope.row.create_time|fmtdate}}
         </template>
       </el-table-column>
       <el-table-column prop="mg_state"

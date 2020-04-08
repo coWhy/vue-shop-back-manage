@@ -243,4 +243,16 @@
           slot-scope的值userList其实就是el-table绑定的数据userList
           userList.row->数组中的每个对象
     -->
-  ````  
+  ``` 
+  ```js
+     <template slot-scope="scope">
+          {{scope.row.create_time|fmtdate}}
+     </template>
+  ```
+  > 引入moment 在main.js设置全局过滤器 进行日期控制
+  ```js
+    import moment from 'moment'
+    Vue.filter('fmtdate', v => {
+      return moment(v).format('YYYY-MM-DD')
+    })
+  ```
