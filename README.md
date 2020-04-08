@@ -116,4 +116,11 @@
    > 在登录成功时 保存正确用户的token值
   ```js
     localStorage.setItem('access-token', data.token)
-  ```  # vue-shop-back-manage
+  ```  
+#### 14 首页 布局容器 使用  样式调整
+> 引入布局容器
+#### 15 首页  头部  样式调整
+> layout 布局
+> el-row 行
+> el-col 列
+> 注意: 24栏
