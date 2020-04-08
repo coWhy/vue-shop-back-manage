@@ -144,3 +144,13 @@
     }
   }
 ```
+#### 19 首页 头部 退出
+```js
+ handleSignout () {
+      // 清除token
+      localStorage.clear()
+      // localStorage.removeItem('access-token')
+      this.$message.success('退出成功')
+      this.$router.push({ name: 'login' })
+    }
+```
