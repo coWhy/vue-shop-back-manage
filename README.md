@@ -300,6 +300,10 @@
   > 页码改变时 -> this,pagenum = val -> this.getUserList()
   >  每页显示条数改变: 从第一页开始显示 this.pagenum = 1 -> currentpage = 1
 #### 30 用户管理 用户列表 分页组件 搜索用户
+> 给搜索框绑定query v-model="query"
+> 点击搜索按钮 发送请求
+> 一键清除 clearable
+> 点击清除按钮 重新获取数据 @clear=""
 ```html
     <!-- 搜索 -->
     <el-row class="searchRow">
