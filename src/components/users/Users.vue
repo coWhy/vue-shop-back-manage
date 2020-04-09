@@ -159,21 +159,23 @@
     <!-- 分配用户角色对话框 -->
     <el-dialog title="分配角色"
                :visible.sync="dialogFormVisibleSetRole">
-      <el-form :model="form">
+      <el-form>
         <el-form-item label="用户名"
                       :label-width="formLabelWidth">
-          {{form.username}}
+          {{curUsername}}
         </el-form-item>
         <el-form-item label="角色名称"
                       :label-width="formLabelWidth">
           <!-- 如果select的绑定的数据的值 和 option 的value一样 就会显示该option的label的值 -->
           <el-select v-model="curRoleId">
             <el-option label="请选择"
-                       :value="-1"></el-option>
-            <el-option :label="item"
-                       v-for="(item,i) in 5"
-                       :key="i"
-                       value="i"></el-option>
+                       :value="-1">
+            </el-option>
+            <el-option :label="item.roleName"
+                       :value="item.id"
+                       v-for="(item,i) in roleList"
+                       :key="i">
+            </el-option>
           </el-select>
 
         </el-form-item>
@@ -193,6 +195,9 @@ export default {
   data () {
     return {
       curRoleId: -1,
+      curUserId: -1,
+      curUsername: '',
+      roleList: [], // 所有的角色
       query: '', // 查询条件
       // 绑定的数据
       userList: [],
@@ -210,12 +215,30 @@ export default {
         email: '',
         mobile: ''
       } // 添加用户对象
-      // curUserId: -1
     }
   },
   methods: {
+    // 设置用户角色
+    async setUserRole () {
+      const res = await this.$http.put(`users/${this.curUserId}/role`, { rid: this.curRoleId })
+      const { meta: { msg, status } } = res.data
+      if (status === 200) {
+        this.$message.success('分配角色成功')
+        this.dialogFormVisibleSetRole = false // 关闭对话框
+      } else {
+        this.$message.warning(msg)
+      }
+    },
     // 分配用户角
-    showSetUserRole (user) {
+    async showSetUserRole (user) {
+      this.curUserId = user.id
+      this.curUsername = user.username
+      // 获取 所有角色名
+      const res1 = await this.$http.get('roles')
+      this.roleList = res1.data.data
+      // 查询用户的角色id
+      const res = await this.$http.get(`users/${user.id}`)
+      this.curRoleId = res.data.data.rid
       this.dialogFormVisibleSetRole = true
     },
     // 修改用户状态

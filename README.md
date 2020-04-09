@@ -454,3 +454,11 @@
  </el-select>
 ```
 > 当改变label时->label显示->改变了value->el-select v-model绑定的数据 自动关联<br>
+> 获取所有角色 roleList<br>
+> v-for el-option :label="item.roleName" :value="item.id"<br>
+> 通过请求获取当前用户的id<br>
+> 给el-select 中 v-model绑定的数据赋值 this,curRoleId = res.data.data.rid<br>
+> 通过视图操作->修改了label->value值变化->el-select v-model绑定的数据 变化<br>
+> 在setUserRole方法中要使用用户id 在data声明curUserId <br>
+> 在打开对话框时候 curUserId  赋值 user.id<br>
+
