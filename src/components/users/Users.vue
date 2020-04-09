@@ -51,6 +51,7 @@
         <template slot-scope="scope">
           <el-switch v-model="scope.row.mg_state"
                      active-color="#13ce66"
+                     @change="changeMgState(scope.row)"
                      inactive-color="#ff4949">
           </el-switch>
         </template>
@@ -75,6 +76,7 @@
                      icon="el-icon-check"
                      size="mini"
                      plain
+                     @click="showSetUserRole(scope.row)"
                      circle>
           </el-button>
         </template>
@@ -154,12 +156,43 @@
       </div>
     </el-dialog>
 
+    <!-- 分配用户角色对话框 -->
+    <el-dialog title="分配角色"
+               :visible.sync="dialogFormVisibleSetRole">
+      <el-form :model="form">
+        <el-form-item label="用户名"
+                      :label-width="formLabelWidth">
+          {{form.username}}
+        </el-form-item>
+        <el-form-item label="角色名称"
+                      :label-width="formLabelWidth">
+          <!-- 如果select的绑定的数据的值 和 option 的value一样 就会显示该option的label的值 -->
+          <el-select v-model="curRoleId">
+            <el-option label="请选择"
+                       :value="-1"></el-option>
+            <el-option :label="item"
+                       v-for="(item,i) in 5"
+                       :key="i"
+                       value="i"></el-option>
+          </el-select>
+
+        </el-form-item>
+      </el-form>
+      <div slot="footer"
+           class="dialog-footer">
+        <el-button @click="dialogFormVisibleSetRole = false">取 消</el-button>
+        <el-button type="primary"
+                   @click="setUserRole()">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </el-card>
 </template>
 <script>
 export default {
   data () {
     return {
+      curRoleId: -1,
       query: '', // 查询条件
       // 绑定的数据
       userList: [],
@@ -169,6 +202,7 @@ export default {
       total: -1,
       dialogFormVisibleAdd: false, // 添加对话框的属性
       dialogFormVisibleEdit: false, // 编辑对话框的属性
+      dialogFormVisibleSetRole: false, // 分配角色对话框的属性
       formLabelWidth: '100px',
       form: {
         username: '',
@@ -180,6 +214,21 @@ export default {
     }
   },
   methods: {
+    // 分配用户角
+    showSetUserRole (user) {
+      this.dialogFormVisibleSetRole = true
+    },
+    // 修改用户状态
+    async changeMgState (user) {
+      // 点击开关 -> mg_state 改变
+      const res = await this.$http.put(`users/${user.id}/state/${user.mg_state}`)
+      const { meta: { msg, status } } = res.data
+      if (status === 200) {
+        this.$message.success('设置状态成功')
+      } else {
+        this.$message.warning(msg)
+      }
+    },
     // 编辑用户
     async editUser () {
       const res = await this.$http.put(`users/${this.form.id}`, this.form)

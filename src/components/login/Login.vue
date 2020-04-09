@@ -8,7 +8,6 @@
       <el-form-item label="用户名">
         <el-input v-model="formdata.username"
                   placeholder="请输入用户名">
-
         </el-input>
       </el-form-item>
       <el-form-item label="密码">

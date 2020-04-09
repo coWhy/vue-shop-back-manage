@@ -425,3 +425,32 @@
       this.dialogFormVisibleAdd = true
     },
 ```
+#### 35 用户管理 用户列表 修改用户状态
+> 找到开关 @change 事件 changeMgState(scope.row)  scope.row --> user<br>
+> 双向绑定 v-model="scope.row.mg_state"<br>
+```html
+  <el-switch v-model="scope.row.mg_state"
+             active-color="#13ce66"
+             @change="changeMgState(scope.row)"
+             inactive-color="#ff4949">
+  </el-switch>
+```
+#### 36 用户管理 用户列表 分配角色
+> 点击按钮->打开对话框<br>
+> 对话框 中有下拉框 <br>
+> 修改当前用户的角色 <br>
+
+> 每个角色的权限<br>
+> 显示操作中的按钮  -> 打开对话框<br>
+> 引入下拉框  如果select的绑定的数据的值 和 option 的value一样 就会显示该option的label的值<br>
+> 分成两类 请选择 和 v-for动态生成的 option<br>
+> data中提供了el-select 的 v-model 所绑定的数据
+```html
+ <el-select v-model="curRoleId">
+            <el-option label="请选择"
+                       :value="-1"></el-option>
+            <!-- <el-option label="管理员"
+                       value="shanghai"></el-option> -->
+ </el-select>
+```
+> 当改变label时->label显示->改变了value->el-select v-model绑定的数据 自动关联<br>
